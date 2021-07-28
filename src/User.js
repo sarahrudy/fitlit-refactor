@@ -6,20 +6,20 @@ class User {
     this.email = userData.email;
     this.strideLength = userData.strideLength;
     this.dailyStepGoal = userData.dailyStepGoal;
-    this.totalStepsThisWeek = 0;
     this.friends = userData.friends;
-    this.ouncesAverage = 0;
-    this.ouncesRecord = [];
-    this.hoursSleptAverage = 0;
-    this.sleepQualityAverage = 0;
-    this.sleepHoursRecord = [];
-    this.sleepQualityRecord = [];
-    this.activityRecord = [];
-    this.accomplishedDays = [];
-    this.trendingStepDays = [];
-    this.trendingStairsDays = [];
-    this.friendsNames = [];
-    this.friendsActivityRecords = []
+    // this.totalStepsThisWeek = 0;
+    // this.ouncesAverage = 0;
+    // this.ouncesRecord = [];
+    // this.hoursSleptAverage = 0;
+    // this.sleepQualityAverage = 0;
+    // this.sleepHoursRecord = [];
+    // this.sleepQualityRecord = [];
+    // this.activityRecord = [];
+    // this.accomplishedDays = [];
+    // this.trendingStepDays = [];
+    // this.trendingStairsDays = [];
+    // this.friendsNames = [];
+    // this.friendsActivityRecords = []
   }
   getFirstName() {
     var names = this.name.split(' ');
