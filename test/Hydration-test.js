@@ -84,3 +84,17 @@ describe('Hydration', function() {
     })
   });
 });
+
+
+
+
+
+
+it('addDailyOunces should show the last week of water', function() {
+  user.ouncesRecord = [
+    {"2019/06/15": 1},
+    {"2019/06/15": 1},
+    {"2019/06/16": 4}
+  ]
+  expect(user.addDailyOunces("2019/06/15")).to.equal(2);
+});

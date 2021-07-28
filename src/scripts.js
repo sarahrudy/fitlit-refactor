@@ -300,3 +300,14 @@ friendsStepsParagraphs.forEach(paragraph => {
     paragraph.classList.add('yellow-text');
   }
 });
+
+
+
+
+
+
+
+
+
+
+// METHODS ADDED FROM OTHER CLASSES

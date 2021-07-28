@@ -91,3 +91,27 @@ describe('Sleep', function() {
     });
   })
 });
+
+
+
+
+
+
+
+
+describe('updateSleep', function() {
+  beforeEach(() => {
+    user.updateSleep("2019/06/15", 7, 4.7);
+    user.updateSleep("2019/07/14", 6, 4);
+    user.updateSleep("2019/08/04", 8, 5.4);
+  })
+  it('should update user\'s quality of sleep record', function() {
+    expect(user.sleepQualityRecord.length).to.equal(3);
+  });
+  it('should update user\'s average hours of sleep', function() {
+    expect(user.hoursSleptAverage).to.equal('7.0');
+  });
+  it('should update user\'s average quality of sleep', function() {
+    expect(user.sleepQualityAverage).to.equal('4.7');
+  });
+})
