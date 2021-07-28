@@ -23,8 +23,7 @@ class User {
   }
 
   getFirstName() {
-    var splitName = this.name.split(' ');
-    return splitName[0].toUpperCase();
+    return this.name.split(' ')[0]
   }
 
 // ALL METHODS BELOW DO NOT BELONG IN USER CLASS/TESTS
@@ -167,6 +166,7 @@ class User {
     }, 0));
   }
   findFriendsTotalStepsForWeek(users, date) {
+
     this.friends.map(friend => {
       let matchedFriend = users.find(user => user.id === friend);
       matchedFriend.calculateTotalStepsThisWeek(date);
