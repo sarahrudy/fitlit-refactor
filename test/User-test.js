@@ -22,51 +22,51 @@ describe.only('User', () => {
   })
 
 
-  it('should be a function', function() {
+  it('should be a function', () => {
     expect(User).to.be.a('function');
   });
 
-  it('should be an instance of user', function() {
+  it('should be an instance of user', () => {
     expect(user).to.be.an.instanceof(User);
   });
 
-  it('should have an id', function() {
+  it('should have an id', () => {
     //  ADDED TEST:
     // expect(user.id).to.be.a('number');
     expect(user.id).to.equal(1);
   });
 
-  it('should have a name', function() {
+  it('should have a name', () => {
     //  ADDED TEST:
     // expect(user.name).to.be.a('string');
     expect(user.name).to.equal('Luisa Hane');
   });
 
-  it('should have an address', function() {
+  it('should have an address', () => {
     //  ADDED TEST:
     // expect(user.name).to.be.a('string');
     expect(user.address).to.equal('15195 Nakia Tunnel, Erdmanport VA 19901-1697');
   });
 
-  it('should have an email address', function() {
+  it('should have an email address', () => {
     //  ADDED TEST:
     // expect(user.name).to.be.a('string');
     expect(user.email).to.equal('Diana.Hayes1@hotmail.com');
   });
 
-  it('should have a stride length', function() {
+  it('should have a stride length', () => {
     //  ADDED TEST:
     // expect(user.name).to.be.a('number');
     expect(user.strideLength).to.equal(4.3);
   });
 
-  it('should have a daily step goal', function() {
+  it('should have a daily step goal', () => {
     //  ADDED TEST:
     // expect(user.name).to.be.a('number');
     expect(user.dailyStepGoal).to.equal(10000);
   });
 
-  it('should have friends', function() {
+  it('should have friends', () => {
     //  ADDED TEST:
     // expect(user.name).to.be.a('array');
     expect(user.friends).to.deep.equal([16, 4, 8])
