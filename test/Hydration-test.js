@@ -88,7 +88,7 @@ describe('Hydration', function() {
 
 
 
-
+//test from user class
 
 it('addDailyOunces should show the last week of water', function() {
   user.ouncesRecord = [
@@ -97,4 +97,25 @@ it('addDailyOunces should show the last week of water', function() {
     {"2019/06/16": 4}
   ]
   expect(user.addDailyOunces("2019/06/15")).to.equal(2);
+});
+
+
+//test from user repo class
+it('should have a method that calculates friends average ounces of water', function() {
+  user1.ouncesRecord = [
+    {"2019/06/15": 1},
+    {"2019/06/15": 1},
+    {"2019/06/16": 5}
+  ]
+  user2.ouncesRecord = [
+    {"2019/06/15": 1},
+    {"2019/06/15": 1},
+    {"2019/06/16": 8}
+  ]
+  user3.ouncesRecord = [
+    {"2019/06/15": 1},
+    {"2019/06/15": 1},
+    {"2019/06/16": 4}
+  ]
+  expect(userRepository.calculateAverageDailyWater("2019/06/16")).to.equal(5)
 });

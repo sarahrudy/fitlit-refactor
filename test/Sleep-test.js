@@ -98,7 +98,7 @@ describe('Sleep', function() {
 
 
 
-
+//tests from user class tests
 describe('updateSleep', function() {
   beforeEach(() => {
     user.updateSleep("2019/06/15", 7, 4.7);
@@ -115,3 +115,71 @@ describe('updateSleep', function() {
     expect(user.sleepQualityAverage).to.equal('4.7');
   });
 })
+
+// tests from user repo class
+it('calculateAverageSleepQuality should return average sleep quality for all users', function() {
+  user1.sleepQualityAverage = 3.3;
+  user2.sleepQualityAverage = 5;
+  user3.sleepQualityAverage = 1;
+  expect(userRepository.calculateAverageSleepQuality()).to.equal(3.1);
+});
+
+it('should have a method that finds the best sleepers', function() {
+  sleep1 = new Sleep({
+    "userID": 1,
+    "date": "2019/06/16",
+    "hoursSlept": 6.1,
+    "sleepQuality": 1000
+  }, userRepository);
+  sleep2 = new Sleep({
+    "userID": 2,
+    "date": "2019/06/15",
+    "hoursSlept": 7.3,
+    "sleepQuality": 500
+  }, userRepository);
+  sleep3 = new Sleep({
+    "userID": 3,
+    "date": "2019/06/15",
+    "hoursSlept": 9.3,
+    "sleepQuality": 1.4
+  }, userRepository);
+  expect(userRepository.findBestSleepers("2019/06/16")).to.deep.equal([user1, user2]);
+});
+it('should have a method that finds the longest sleepers', function() {
+  sleepData = [{
+    "userID": 1,
+    "date": "2019/06/15",
+    "hoursSlept": 6.1,
+    "sleepQuality": 100
+  }, {
+    "userID": 2,
+    "date": "2019/06/15",
+    "hoursSlept": 7.3,
+    "sleepQuality": 1500
+  }, {
+    "userID": 3,
+    "date": "2019/06/15",
+    "hoursSlept": 9.3,
+    "sleepQuality": 1.4
+  }];
+  expect(userRepository.getLongestSleepers("2019/06/15")).to.equal(3);
+});
+it('should have a method that finds the worst sleepers', function() {
+  sleepData = [{
+    "userID": 1,
+    "date": "2019/06/15",
+    "hoursSlept": 6.1,
+    "sleepQuality": 1000
+  }, {
+    "userID": 2,
+    "date": "2019/06/15",
+    "hoursSlept": 7.3,
+    "sleepQuality": 500
+  }, {
+    "userID": 3,
+    "date": "2019/06/15",
+    "hoursSlept": 9.3,
+    "sleepQuality": 1.4
+  }];
+  expect(userRepository.getWorstSleepers("2019/06/15")).to.equal(1);
+});

@@ -16,6 +16,7 @@ class Hydration {
 export default Hydration;
 
 
+// methods from user class
 
   // this.ouncesAverage = 0;
   // this.ouncesRecord = [];
@@ -35,4 +36,16 @@ addDailyOunces(date) {
     }
     return sum
   }, 0)
+}
+
+// methods from user repo class
+
+calculateAverageDailyWater(date) {
+  let todaysDrinkers = this.users.filter(user => {
+    return user.addDailyOunces(date) > 0;
+  });
+  let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
+    return sum += drinker.addDailyOunces(date);
+  }, 0)
+  return Math.floor(sumDrankOnDate / todaysDrinkers.length);
 }
