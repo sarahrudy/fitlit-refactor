@@ -75,7 +75,7 @@ describe('User', () => {
   it('getFirstName should return the first name of the user', () => {
     //  ADDED TEST:
     // expect(user.name).to.be.a('string');
-    expect(user.getFirstName()).to.equal('LUISA');
+    expect(user.getFirstName()).to.equal('Luisa');
   });
 
   // it('should have a default ouncesAverage of 0', function() {
