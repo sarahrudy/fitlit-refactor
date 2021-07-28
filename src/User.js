@@ -21,10 +21,14 @@ class User {
     // this.friendsNames = [];
     // this.friendsActivityRecords = []
   }
+
   getFirstName() {
-    var names = this.name.split(' ');
-    return names[0].toUpperCase();
+    var splitName = this.name.split(' ');
+    return splitName[0].toUpperCase();
   }
+
+// ALL METHODS BELOW DO NOT BELONG IN USER CLASS/TESTS
+
   updateHydration(date, amount) {
     this.ouncesRecord.unshift({[date]: amount});
     if (this.ouncesRecord.length) {

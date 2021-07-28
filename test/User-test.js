@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import User from '../src/User';
 
 
-describe.only('User', () => {
+describe('User', () => {
   let user;
 
   beforeEach(() => {
@@ -71,6 +71,13 @@ describe.only('User', () => {
     // expect(user.name).to.be.a('array');
     expect(user.friends).to.deep.equal([16, 4, 8])
   });
+
+  it('getFirstName should return the first name of the user', () => {
+    //  ADDED TEST:
+    // expect(user.name).to.be.a('string');
+    expect(user.getFirstName()).to.equal('LUISA');
+  });
+
   // it('should have a default ouncesAverage of 0', function() {
   //   expect(user.ouncesAverage).to.equal(0);
   // });
@@ -102,9 +109,9 @@ describe.only('User', () => {
   //   expect(user.trendingStairsDays).to.deep.equal([]);
   // });
 
-  it('getFirstName should return the first name of the user', function () {
-    expect(user.getFirstName()).to.equal('LUISA');
-  });
+
+  // ALL METHODS BELOW DO NOT BELONG IN USER CLASS/TESTS
+
   it('addDailyOunces should show the last week of water', function() {
     user.ouncesRecord = [
       {"2019/06/15": 1},
