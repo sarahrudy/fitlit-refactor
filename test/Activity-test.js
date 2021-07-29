@@ -3,7 +3,7 @@ import Activity from '../src/Activity';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
 
-describe('Activity', function() {
+describe.only('Activity', function() {
   let activity;
   let user;
   let userRepository;
@@ -283,7 +283,7 @@ it('should have a method that calculates average number of active minutes for us
   user2.activityRecord = [{date: "2019/09/16", minutesActive: 78}, {date: "2019/09/17", minutesActive: 12}];
   expect(userRepository.calculateAverageMinutesActive("2019/09/17")).to.equal(44);
 })
-});
+
 
 it('should have a method that calculates average number of stairs for users', function() {
   user1.activityRecord = [{date: "2019/09/17", flightsOfStairs: 10}, {date: "2019/09/17", flightsOfStairs: 15}];
