@@ -1,8 +1,7 @@
 import { expect } from 'chai';
-
 import Hydration from '../src/Hydration';
-import UserRepository from '../src/UserRepository';
-import User from '../src/User';
+import HydrationSampleData from '../src/hydrationSampleData';
+
 
 describe('Hydration', function() {
   let hydration;
