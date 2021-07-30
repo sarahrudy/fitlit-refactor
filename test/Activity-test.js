@@ -5,11 +5,10 @@ import { activityTestData } from '../src/data/activityTestData';
 // import User from '../src/User';
 
 describe.only('Activity', () => {
-  let activityData, activity;
+  let activityData;
 
   beforeEach(() => {
-    activityData = activityTestData
-    activity = new Activity(activityData);
+    activityData = activityTestData.map(object => new Activity(object));
     // user1 = new User({
     //   'id': 1,
     //   'name': 'Luisa Hane',
@@ -60,54 +59,56 @@ describe.only('Activity', () => {
   });
 
   it('should be an instance of activity', function() {
-    expect(activity1).to.be.an.instanceof(Activity);
+    expect(activityData[0]).to.be.an.instanceof(Activity);
   });
 
   it('should hold a userID', function() {
-    expect(activity2.userID).to.equal(2);
+    // console.log('activity Data', activityData);
+    // console.log('activities', activityData);
+    expect(activityData[0].userID).to.equal(1);
   });
 
   it('should hold a date', function() {
-    expect(activity1.date).to.equal("2019/06/15");
+    expect(activityData[0].date).to.equal("2019/06/15");
   });
 
   it('should hold number of steps', function() {
-    expect(activity1.steps).to.equal(3684);
+    expect(activityData[0].steps).to.equal(3577);
   });
 
   it('should hold minutes active', function() {
-    expect(activity2.minutesActive).to.equal(280);
+    expect(activityData[0].minutesActive).to.equal(140);
   });
 
   it('should hold flights of stairs', function() {
-    expect(activity2.flightsOfStairs).to.equal(22);
+    expect(activityData[0].flightsOfStairs).to.equal(16);
   });
 
-  it('should have a default value of 0 for miles walked', function() {
-    expect(activity2.milesWalked).to.equal(0);
-  });
-
-  it('should have a default value of null for reached step goal', function() {
-    expect(activity2.reachedStepGoal).to.equal(null);
-  });
-
-  it('doActivity should add activities to user record', function() {
-    expect(user1.activityRecord.length).to.equal(1);
-  });
+  // it('should have a default value of 0 for miles walked', function() {
+  //   expect(activity2.milesWalked).to.equal(0);
+  // });
+  //
+  // it('should have a default value of null for reached step goal', function() {
+  //   expect(activity2.reachedStepGoal).to.equal(null);
+  // });
+  //
+  // it('doActivity should add activities to user record', function() {
+  //   expect(user1.activityRecord.length).to.equal(1);
+  // });
 
   it('should have a method that calculate miles walked', function() {
-    expect(activity1.calculateMiles(userRepository)).to.equal('3.0');
+    expect(activityData.calculateMiles(1)).to.equal('3.0');
   });
 
   describe('compareStepGoal', function() {
     it('should return false if goal isn\'t met', function() {
       activity1.compareStepGoal(userRepository);
-      expect(activity1.reachedStepGoal).to.equal(false);
+      expect(activityData[0].reachedStepGoal).to.equal(false);
     });
 
     it('should return true if goal is met', function() {
       activity2.compareStepGoal(userRepository);
-      expect(activity2.reachedStepGoal).to.equal(true);
+      expect(activityData[0].reachedStepGoal).to.equal(true);
     });
   });
 

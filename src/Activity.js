@@ -1,32 +1,35 @@
 class Activity {
-  constructor(data, userRepository) {
-    this.userID = data.userID;
-    this.date = data.date;
-    this.steps = data.numSteps;
-    this.minutesActive = data.minutesActive;
-    this.flightsOfStairs = data.flightsOfStairs;
+  constructor(activityData) {
+    this.activityData = activityData;
+    this.userID = activityData.userID;
+    this.date = activityData.date;
+    this.steps = activityData.numSteps;
+    this.minutesActive = activityData.minutesActive;
+    this.flightsOfStairs = activityData.flightsOfStairs;
     // this.milesWalked = 0;
     // this.reachedStepGoal = null;
     // this.doActivity(userRepository);
+    console.log(this.activityData)
   }
 
+// Needed for post request??
   doActivity(userRepo) {
     var activity = this;
     userRepo.users.find(function(user) {
-      return user.id === activity.userId;
+      return user.id === activity.userID;
     }).updateActivities(this);
   }
 
-  calculateMiles(userRepository) {
-    let walkingUser = userRepository.users.find(user => {
-      return user.id === this.userId;
-    });
+  calculateMiles(userID) {
+    // get the user by ID - use filter
+    // console.log(activityData);
+    let userSteps = activityData.find(user => userID === this.userID);
     return Math.round(this.steps * walkingUser.strideLength / 5280).toFixed(1);
   }
 
   compareStepGoal(userRepository) {
     let userStepGoal = userRepository.users.find(user => {
-      return user.id === this.userId;
+      return user.id === this.userID;
     }).dailyStepGoal;
     this.reachedStepGoal = this.steps >= userStepGoal;
   }
