@@ -10,14 +10,27 @@ class Sleep { // instance for the user's sleep each day
     constructor(sleepData) {
       this.sleepData = sleepData
     }
-// what is this method trying to do? 
-// 
-  sleep(userRepo) {
-    userRepo.users.find(user => {
-      return user.id === this.userId;
-      // updateSleep() method should be part of the scripts.js file since it's manipulating the DOM
-    }).updateSleep(this.date, this.hoursSlept, this.sleepQuality);
-  }
+            // what is this method trying to do? 
+            // this is our find user by id method - needs a better naming convention 
+              // sleep(userRepo) {
+              //   userRepo.users.find(user => {
+              //     return user.id === this.userId;
+              //     // updateSleep() method should be part of the scripts.js file since it's manipulating the DOM
+              //   }).updateSleep(this.date, this.hoursSlept, this.sleepQuality);
+              // }
+
+
+  // helper function to return user's sleep data by id
+  returnUserData(id) {
+    return this.sleepData.filter((sleepItem) => {
+      return sleepItem.userID === id
+      // we still need this portion to update the DOM, but it should be moved into scripts.js file 
+  }).updateSleep(this.date, this.hoursSlept, this.sleepQuality)
+}
+
+  
+
+
 
   //update sleep does not have a corresponding test
   // --- we don't need tests for DOM manipulation so we won't need a test for updateSleep()
