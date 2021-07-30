@@ -22,25 +22,30 @@ describe('Sleep', () => {
     // });
 
     it('should be an instance of sleep', () => {
-      expect(sleep).to.be.an.instanceof(Sleep);
+      expect(sleep).to.be.an.instanceof(Sleep)
     });
 
-    it.skip('should hold a userId', function() {
-      expect(sleep2.userId).to.equal(2);
+    // it('should hold a userId', function() {
+    //   expect(sleep2.userId).to.equal(2);
+    // });
+
+    // it('should hold a date', function() {
+    //   expect(sleep3.date).to.equal("2019/07/17");
+    // });
+
+    // it('should hold hours slept', function() {
+    //   expect(sleep1.hoursSlept).to.equal(6.1);
+    // });
+
+    // it('should hold sleep quality', function() {
+    //   expect(sleep3.sleepQuality).to.equal(1.4);
+    // });
+
+    it('should update user\'s average hours of sleep', function() {
+      expect(user.hoursSleptAverage).to.equal('7.0');
     });
 
-    it.skip('should hold a date', function() {
-      expect(sleep3.date).to.equal("2019/07/17");
-    });
-
-    it.skip('should hold hours slept', function() {
-      expect(sleep1.hoursSlept).to.equal(6.1);
-    });
-
-    it.skip('should hold sleep quality', function() {
-      expect(sleep3.sleepQuality).to.equal(1.4);
-    });
-
+    // not quite sure what these tests are testing 
     describe('sleep', function() {
       it.skip('should update user\'s slept hours record', function() {
         expect(user1.sleepHoursRecord.length).to.equal(2);
@@ -57,12 +62,6 @@ describe('Sleep', () => {
     })
   });
 
-
-
-
-
-
-
 // -------- tests from user class tests --------
 // describe('updateSleep', function() {
 //   beforeEach(() => {
@@ -73,9 +72,7 @@ describe('Sleep', () => {
 //   it('should update user\'s quality of sleep record', function() {
 //     expect(user.sleepQualityRecord.length).to.equal(3);
 //   });
-//   it('should update user\'s average hours of sleep', function() {
-//     expect(user.hoursSleptAverage).to.equal('7.0');
-//   });
+/
 //   it('should update user\'s average quality of sleep', function() {
 //     expect(user.sleepQualityAverage).to.equal('4.7');
 //   });
