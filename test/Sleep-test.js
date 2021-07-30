@@ -7,6 +7,10 @@ import { sampleSleepData } from '../src/data/sampleSleepData'
 describe('Sleep', () => {
   let sleepData 
   let sleep
+              // let sleep;
+              // let user1;
+              // let user2;
+              // let userRepository;
 
   beforeEach(() => {
     sleepData = sampleSleepData
@@ -17,35 +21,41 @@ describe('Sleep', () => {
       expect(Sleep).to.be.a('function');
     });
 
-    // it('should be an instance of activity', function() {
-    //   expect(sleep1).to.be.an.instanceof(Sleep);
-    // });
+              // it('should be an instance of activity', function() {
+              //   expect(sleep1).to.be.an.instanceof(Sleep);
+              // });
 
     it('should be an instance of sleep', () => {
       expect(sleep).to.be.an.instanceof(Sleep)
     });
 
-    // it('should hold a userId', function() {
-    //   expect(sleep2.userId).to.equal(2);
-    // });
+              // it('should hold a userId', function() {
+              //   expect(sleep2.userId).to.equal(2);
+              // });
 
-    // it('should hold a date', function() {
-    //   expect(sleep3.date).to.equal("2019/07/17");
-    // });
+              // it('should hold a date', function() {
+              //   expect(sleep3.date).to.equal("2019/07/17");
+              // });
 
-    // it('should hold hours slept', function() {
-    //   expect(sleep1.hoursSlept).to.equal(6.1);
-    // });
+              // it('should hold hours slept', function() {
+              //   expect(sleep1.hoursSlept).to.equal(6.1);
+              // });
 
-    // it('should hold sleep quality', function() {
-    //   expect(sleep3.sleepQuality).to.equal(1.4);
-    // });
+              // it('should hold sleep quality', function() {
+              //   expect(sleep3.sleepQuality).to.equal(1.4);
+              // });
 
-    it('should update user\'s average hours of sleep', function() {
-      expect(user.hoursSleptAverage).to.equal('7.0');
-    });
+                // -----------
+              // it('should update user\'s average hours of sleep', function() {
+              //   expect(user1.hoursSleptAverage).to.equal('7.0');
+              // });
 
-    // not quite sure what these tests are testing 
+    it('should calculate user\'s average hours of sleep', function () {
+      expect(sleep.calculateAverageHoursSlept).to.equal('7.0');
+      console.log(sleep.calculateAverageHoursSlept)
+    })
+
+    // not quite sure what these tests are testing -- record? as in the recorded data?
     describe('sleep', function() {
       it.skip('should update user\'s slept hours record', function() {
         expect(user1.sleepHoursRecord.length).to.equal(2);
@@ -72,7 +82,7 @@ describe('Sleep', () => {
 //   it('should update user\'s quality of sleep record', function() {
 //     expect(user.sleepQualityRecord.length).to.equal(3);
 //   });
-/
+
 //   it('should update user\'s average quality of sleep', function() {
 //     expect(user.sleepQualityAverage).to.equal('4.7');
 //   });
