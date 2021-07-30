@@ -49,3 +49,5 @@ const hydrationData = [
     "date": "2019/06/23",
     "numOunces": 75
   }];
+
+export default hydrationData;
