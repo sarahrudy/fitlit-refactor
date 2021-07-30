@@ -13,13 +13,14 @@ class Sleep { // instance for the user's sleep each day
 // what is this method trying to do? 
 // 
   sleep(userRepo) {
-    userRepo.users.find(function(user) {
+    userRepo.users.find(user => {
       return user.id === this.userId;
       // updateSleep() method should be part of the scripts.js file since it's manipulating the DOM
     }).updateSleep(this.date, this.hoursSlept, this.sleepQuality);
   }
 
   //update sleep does not have a corresponding test
+  // --- we don't need tests for DOM manipulation so we won't need a test for updateSleep()
 // updateSleep(date, hours, quality) {
 //   this.sleepHoursRecord.unshift({
 //     'date': date,
