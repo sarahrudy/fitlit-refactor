@@ -67,6 +67,7 @@ describe('UserRepository', function() {
   it('getUser should return user object when given a user id', function() {
     expect(userRepository.getUser(2)).to.equal(user2);
   })
+})
   // it('calculateAverageStepGoal should return average step goal for all users', function() {
   //   expect(userRepository.calculateAverageStepGoal()).to.equal(10000);
   // })
