@@ -13,9 +13,8 @@ class Sleep { // instance for the user's sleep each day
 // what is this method trying to do? 
 // 
   sleep(userRepo) {
-    var sleep = this;
     userRepo.users.find(function(user) {
-      return user.id === sleep.userId;
+      return user.id === this.userId;
       // updateSleep() method should be part of the scripts.js file since it's manipulating the DOM
     }).updateSleep(this.date, this.hoursSlept, this.sleepQuality);
   }
