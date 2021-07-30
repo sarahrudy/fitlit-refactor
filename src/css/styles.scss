@@ -1,3 +1,5 @@
+@import 'index';
+
 *,
 *:after,
 *:before {
@@ -18,7 +20,7 @@ header {
 }
 
 button:active {
-  border: none;
+  border: $omit-border;
   outline: none;
 }
 
@@ -26,7 +28,7 @@ button:active {
   background-image: url(../images/profile.png);
   background-position: center;
   background-size: 5.6vw;
-  border: none;
+  border: $omit-border;
   display: inline;
   float: right;
   height: 5.6vw;
@@ -180,51 +182,51 @@ main {
 /* BUTTONS */
 .info-button {
   background-position: center;
-  background-size: 3.4vw;
-  border: none;
+  background-size: $button-size;
+  border: $omit-border;
   display: inline;
-  height: 3.4vw;
+  height: $button-size;
   margin-left: 1vw;
-  width: 3.4vw;
+  width: $button-size;
 }
 
 .friends-button {
   background-position: center;
-  background-size: 3.4vw;
-  border: none;
+  background-size: $button-size;
+  border: $omit-border;
   display: inline;
-  height: 3.4vw;
+  height: $button-size;
   margin-right: 1vw;
-  width: 3.4vw;
+  width: $button-size;
 }
 
 .calendar-button {
   background-position: center;
-  background-size: 3.4vw;
-  border: none;
+  background-size: $button-size;
+  border: $omit-border;
   display: inline;
   float: right;
-  height: 3.4vw;
+  height: $button-size;
   margin-right: 1vw;
-  width: 3.4vw;
+  width: $button-size;
 }
 
 .trending-button {
   background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  height: 3.4vw;
+  background-size: $button-size;
+  border: $omit-border;
+  height: $button-size;
   margin-left: 1vw;
-  width: 3.4vw;
+  width: $button-size;
 }
 
 .go-back-button {
   background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  height: 3.4vw;
+  background-size: $button-size;
+  border: $omit-border;
+  height: $button-size;
   margin-left: 1vw;
-  width: 3.4vw;
+  width: $button-size;
 }
 
 .steps-go-back-button {
