@@ -1,4 +1,4 @@
-const hydrationData = [
+const hydrationSampleData = [
   {
     "userID": 1,
     "date": "2019/06/15",
@@ -50,4 +50,4 @@ const hydrationData = [
     "numOunces": 75
   }];
 
-export default hydrationData;
+export default hydrationSampleData;
