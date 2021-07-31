@@ -1,0 +1,25 @@
+// file that contains any of your Sass variables or function definitions
+
+
+$button-width: 3.4vw;
+$omit-border: none;
+$container-margin: .5vw;
+
+
+
+@mixin center-card() {
+  align-items: center;
+  display: flex;
+}
+
+@mixin center-data-line() {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin button-styling() {
+  background-position: center;
+  background-size: 3.4vw;
+  border: none;
+  height: 3.4vw;
+}
