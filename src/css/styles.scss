@@ -109,16 +109,18 @@ main {
 }
 
 .main-card {
-  align-items: center;
-  display: flex;
+  @include center-card();
+  // align-items: center;
+  // display: flex;
   flex-direction: column;
   height: 20vw;
   justify-content: center;
 }
 
 .main-card-top-row {
-  align-items: center;
-  display: flex;
+  @include center-card();
+  // align-items: center;
+  // display: flex;
   justify-content: space-between;
   width: 100%;
 }
@@ -131,30 +133,29 @@ main {
 #steps-card-container {
   background-color: #F5634B;
   grid-area: steps;
-  margin: .5vw;
+  margin: $container-margin;
 }
 
 #hydration-card-container {
   background-color: #54C6BE;
   grid-area: hydration;
-  margin: .5vw;
+  margin: $container-margin;
 }
 
 #stairs-card-container {
   background-color: #8975B2;
   grid-area: stairs;
-  margin: .5vw;
+  margin: $container-margin;
 }
 
 #sleep-card-container {
   background-color: #FBD089;
   grid-area: sleep;
-  margin: .5vw;
+  margin: $container-margin;
 }
 
 .card-data-line {
-  display: flex;
-  justify-content: center;
+  @include center-data-line();
   margin-bottom: 2vw;
 }
 
@@ -168,8 +169,7 @@ main {
 }
 
 .hydration-data-line {
-  display: flex;
-  justify-content: center;
+  @include center-data-line();
   margin-bottom: .2vw;
 }
 
@@ -181,52 +181,37 @@ main {
 
 /* BUTTONS */
 .info-button {
-  background-position: center;
-  background-size: $button-size;
-  border: $omit-border;
+@include button-styling();
   display: inline;
-  height: $button-size;
   margin-left: 1vw;
-  width: $button-size;
+  width: $button-width;
 }
 
 .friends-button {
-  background-position: center;
-  background-size: $button-size;
-  border: $omit-border;
+@include button-styling();
   display: inline;
-  height: $button-size;
   margin-right: 1vw;
-  width: $button-size;
+  width: $button-width;
 }
 
 .calendar-button {
-  background-position: center;
-  background-size: $button-size;
-  border: $omit-border;
+@include button-styling();
   display: inline;
-  float: right;
-  height: $button-size;
   margin-right: 1vw;
-  width: $button-size;
+  width: $button-width;
+  float: right;
 }
 
 .trending-button {
-  background-position: center;
-  background-size: $button-size;
-  border: $omit-border;
-  height: $button-size;
+@include button-styling();
   margin-left: 1vw;
-  width: $button-size;
+  width: $button-width;
 }
 
 .go-back-button {
-  background-position: center;
-  background-size: $button-size;
-  border: $omit-border;
-  height: $button-size;
+@include button-styling();
   margin-left: 1vw;
-  width: $button-size;
+  width: $button-width;
 }
 
 .steps-go-back-button {
