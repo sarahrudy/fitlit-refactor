@@ -2,3 +2,8 @@
 
 $button-size: 3.4vw;
 $omit-border: none;
+
+@mixin center-card {
+  align-items: center;
+  display: flex;
+}
