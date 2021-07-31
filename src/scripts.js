@@ -1,10 +1,11 @@
 import './css/base.scss';
 import './css/styles.scss';
 
-import userData from './data/users';
-import activityData from './data/activity';
-import sleepData from './data/sleep';
-import hydrationData from './data/hydration';
+// import userData from './data/users';
+// import activityData from './data/activity';
+// import sleepData from './data/sleep';
+// import hydrationData from './data/hydration';
+import {fetchApiData} from './APIcalls.js';
 
 import UserRepository from './UserRepository';
 import User from './User';
@@ -14,24 +15,49 @@ import Sleep from './Sleep';
 
 
 
-let userRepository = new UserRepository();
+let userRepository = new UserRepository(userData);
 
-userData.forEach(user => {
-  user = new User(user);
-  userRepository.users.push(user)
-});
+// userData.forEach(user => {
+//   user = new User(user);
+//   userRepository.users.push(user)
+// });
+//
+// activityData.forEach(activity => {
+//   activity = new Activity(activity, userRepository);
+// });
+//
+// hydrationData.forEach(hydration => {
+//   hydration = new Hydration(hydration, userRepository);
+// });
+//
+// sleepData.forEach(sleep => {
+//   sleep = new Sleep(sleep, userRepository);
+// });
+function loadPage() {
+  Promise.resolve(fetchPageData()).then((data) => generateRepoClasses(data))
+    .then(() => displayPageInfo());
+}
 
-activityData.forEach(activity => {
-  activity = new Activity(activity, userRepository);
-});
+function fetchPageData() {
+  const userRepoPromise = fetchData('users')
+  const hydrationPromise = fetchData('hydration')
+  const sleepPromise = fetchData('sleep')
+  return Promise.all([userRepoPromise, hydrationPromise, sleepPromise]).then(values => values);
+}
 
-hydrationData.forEach(hydration => {
-  hydration = new Hydration(hydration, userRepository);
-});
+function generateRepoClasses(dataSets) {
+  allUserData = new UserRepository(dataSets[0].userData);
+  console.log('LOOOOK', allUserData);
+  // allHydrationData = new Hydration(dataSets[1].hydrationData);
+  // allSleepData = new Sleep(dataSets[2].sleepData);
+}
 
-sleepData.forEach(sleep => {
-  sleep = new Sleep(sleep, userRepository);
-});
+function fetchData(type) {
+  return fetch(`http://localhost:3001/api/v1/${type}`)
+    .then(response => response.json())
+    .then(data => data)
+    .catch(err => console.log(`ERROR with ${type}: ${err}`))
+}
 
 let user = userRepository.users[0];
 let todayDate = "2019/09/22";
