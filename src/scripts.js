@@ -23,12 +23,18 @@ fetchApiData('users').then((data) => {
   data.userData.forEach(user => {
   user = new User(user);
   userRepository.users.push(user)
+  console.log(userRepository);
   });
   //next.then() here should call all of the functions that contain the user
   //should this be wrapped in a function?
 })
 // }
 
+fetchApiData('hydration').then((data) => {
+  data.hydrationData.forEach(hydration => {
+    hydration = new Hydration(hydration, userRepository);
+  })
+});
 
 fetchApiData('activity').then((data) => {
   data.activityData.forEach(activity => {
@@ -36,15 +42,16 @@ fetchApiData('activity').then((data) => {
   })
 })
 
-fetchApiData('hydration').then((data) => {
-  data.hydrationData.forEach(hydration => {
-  hydration = new Hydration(hydration, userRepository);
+
+fetchApiData('sleep').then((data) => {
+  data.sleepData.forEach(sleep => {
+  sleep = new Sleep(sleep, userRepository);
   })
 });
 
-sleepData.forEach(sleep => {
-  sleep = new Sleep(sleep, userRepository);
-});
+
+// next step: make sure the compiler is reading the JS in the strict ordwer you want. currently user is being read beofre it is defined. to fix - wrap all functions using the user variab;e within a function that is only called after all of your data is fetched
+
 
 // function loadPage() {
 //   Promise.resolve(fetchPageData()).then((data) => generateRepoClasses(data))
