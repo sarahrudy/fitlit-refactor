@@ -36,8 +36,10 @@ fetchApiData('activity').then((data) => {
   })
 })
 
-hydrationData.forEach(hydration => {
+fetchApiData('hydration').then((data) => {
+  data.hydrationData.forEach(hydration => {
   hydration = new Hydration(hydration, userRepository);
+  })
 });
 
 sleepData.forEach(sleep => {
