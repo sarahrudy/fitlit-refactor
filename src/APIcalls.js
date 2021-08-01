@@ -5,10 +5,13 @@ export const fetchApiData = (type) => {
 };
 
 
-  // return fetch(`http://localhost:3001/api/v1/${type}`, {
-  //   method: 'POST',
-  //   body: JSON.stringify(body),
-  //   headers: {
-  //     'Content-type': 'application/json'
-  //   }
-  // })
+  return fetch(`http://localhost:3001/api/v1/${type}`, {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-type': 'application/json'
+    }
+  })
+  // .then(response => response.json())
+  // .then(data => console.log(data))
+  // .catch(err => console.log(err))

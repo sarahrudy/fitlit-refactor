@@ -85,6 +85,7 @@ const createUserRepo = () => {
   .then(fetchHydration())
   .then(fetchSleep())
   .then(fetchActivity())
+  // .then(big function with all variables using user)
   //call main function to run wrapped user functions
 }
 
@@ -113,11 +114,11 @@ const fetchActivity = () => {
 }
 
 //EVENT LISTENERS
-window.addEventListener('load', createUserRepo())
+window.addEventListener('load', createUserRepo)
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
-stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
-stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
+stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
+stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
 let todayDate = "2019/09/22";
 
 // user.findFriendsNames(userRepository.users);
@@ -150,9 +151,10 @@ const runActivityFunctions = () => {
 }
 // call the main function in a .then after all user info is fetched
 
+//need renderToDOM function 
 
-
-let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
+// function sortedHydrationDataByDate() {
+let sortedHydrationDataByDate = user && user.ouncesRecord.sort((a, b) => {
   if (Object.keys(a)[0] > Object.keys(b)[0]) {
     return -1;
   }
@@ -160,7 +162,7 @@ let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
     return 1;
   }
   return 0;
-});
+})
 
 
 function flipCard(cardToHide, cardToShow) {
@@ -240,7 +242,7 @@ function updateTrendingStepDays() {
 }
 
 for (var i = 0; i < dailyOz.length; i++) {
-  dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
+  dailyOz[i].innerText = user && user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
 }
 
 dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
