@@ -15,16 +15,26 @@ import Sleep from './Sleep';
 
 
 
-let userRepository = new UserRepository(userData);
+let userRepository = new UserRepository();
+let user;
 
-userData.forEach(user => {
+// const fetchUsers = () => {
+fetchApiData('users').then((data) => {
+  data.userData.forEach(user => {
   user = new User(user);
   userRepository.users.push(user)
-});
+  });
+  //next.then() here should call all of the functions that contain the user
+  //should this be wrapped in a function?
+})
+// }
 
-activityData.forEach(activity => {
+
+fetchApiData('activity').then((data) => {
+  data.activityData.forEach(activity => {
   activity = new Activity(activity, userRepository);
-});
+  })
+})
 
 hydrationData.forEach(hydration => {
   hydration = new Hydration(hydration, userRepository);
@@ -53,7 +63,7 @@ sleepData.forEach(sleep => {
 //   allSleepData = new Sleep(dataSets[2].sleepData);
 // }
 
-let user = userRepository.users[0];
+user = userRepository.users[0];
 let todayDate = "2019/09/22";
 user.findFriendsNames(userRepository.users);
 

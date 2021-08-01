@@ -2,8 +2,8 @@ import sleepData from './data/sleep';
 
 
 class UserRepository {
-  constructor(userData) {
-    this.users = userData;
+  constructor() {
+    this.users = [];
   }
   getUser(id) {
     return this.users.find(function(user) {
