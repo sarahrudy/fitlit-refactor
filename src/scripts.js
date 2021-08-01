@@ -23,26 +23,22 @@ window.addEventListener('load', () => {
 })
 
 const createUserRepo = () => {
-  // console.log(fetchUsers())
   fetchApiData('users').then((data) => {
     data.userData.forEach(user => {
     user = new User(user);
     userRepository.users.push(user)
-    console.log(userRepository);
-    });
-    //next.then() here should call all of the functions that contain the user
-    //should this be wrapped in a function?
+    })
   })
   .then(fetchHydration())
   .then(fetchSleep())
   .then(fetchActivity())
+  //call main function to run wrapped user functions
 }
 
 const fetchHydration = (data) => {
   fetchApiData('hydration').then((data) => {
     data.hydrationData.forEach(hydration => {
       hydration = new Hydration(hydration, userRepository);
-      console.log(hydration)
     })
   })
 }
@@ -63,34 +59,22 @@ const fetchActivity = () => {
   })
 }
 
-
-
+user = userRepository.users[0];
+let todayDate = "2019/09/22";
+// user.findFriendsNames(userRepository.users);
 
 // next step: make sure the compiler is reading the JS in the strict ordwer you want. currently user is being read beofre it is defined. to fix - wrap all functions using the user variab;e within a function that is only called after all of your data is fetched
 
 
-// function loadPage() {
-//   Promise.resolve(fetchPageData()).then((data) => generateRepoClasses(data))
-//     .then(() => displayPageInfo());
-// }
-//
-// function fetchPageData() {
-//   const userRepoPromise = fetchData('users')
-//   const hydrationPromise = fetchData('hydration')
-//   const sleepPromise = fetchData('sleep')
-//   return Promise.all([userRepoPromise, hydrationPromise, sleepPromise]).then(values => values);
-// }
-//
-// function generateRepoClasses(dataSets) {
-//   allUserData = new UserRepository(dataSets[0].userData);
-//   console.log('LOOOOK', allUserData);
-//   allHydrationData = new Hydration(dataSets[1].hydrationData);
-//   allSleepData = new Sleep(dataSets[2].sleepData);
-// }
 
-user = userRepository.users[0];
-let todayDate = "2019/09/22";
-user.findFriendsNames(userRepository.users);
+// Main function that runs all methods called on a user -- runUserFunctions
+// within that function, run all:
+  // hydration functions (helper functions wrapping all hydration functions)
+  // sleep functions (helper functions wrapping all sleep functions)
+  // activity functions (helper functions wrapping all activity functions)
+
+// call the main function in a .then after all user info is fetched
+
 
 let dailyOz = document.querySelectorAll('.daily-oz');
 let dropdownEmail = document.querySelector('#dropdown-email');
