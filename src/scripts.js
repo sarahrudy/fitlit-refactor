@@ -85,6 +85,7 @@ const createUserRepo = () => {
   .then(fetchHydration())
   .then(fetchSleep())
   .then(fetchActivity())
+  // .then(runUserFunctions())
   //call main function to run wrapped user functions
 }
 
@@ -113,11 +114,11 @@ const fetchActivity = () => {
 }
 
 //EVENT LISTENERS
-window.addEventListener('load', createUserRepo())
+window.addEventListener('load', createUserRepo)
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
-stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
-stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
+stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
+stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
 let todayDate = "2019/09/22";
 
 // user.findFriendsNames(userRepository.users);
@@ -129,29 +130,33 @@ let todayDate = "2019/09/22";
 // Main function that runs all methods called on a user -- runUserFunctions
 const runUserFunctions = () => {
   user = userRepository.users[0];
-
-  runHydrationFunctions()
-  runSleepFunctions()
-  runActivityFunctions()
+  // runHydrationFunctions()
+  // runSleepFunctions()
+  // runActivityFunctions()
+  runPageFunctions()
 }
 
 // within that function, run all:
   // hydration functions (helper functions wrapping all hydration functions)
-const runHydrationFunctions = () => {
-
-}
+// const runHydrationFunctions = () => {
+//
+// }
   // sleep functions (helper functions wrapping all sleep functions)
-const runSleepFunctions = () => {
-
-}
+// const runSleepFunctions = () => {
+//
+// }
   // activity functions (helper functions wrapping all activity functions)
-const runActivityFunctions = () => {
-
-}
+// const runActivityFunctions = () => {
+//
+// }
 // call the main function in a .then after all user info is fetched
 
 
 
+
+
+const runPageFunctions = () => {
+//hydration
 let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
   if (Object.keys(a)[0] > Object.keys(b)[0]) {
     return -1;
@@ -162,9 +167,6 @@ let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
   return 0;
 });
 
-
-
-//hydration
 for (var i = 0; i < dailyOz.length; i++) {
   dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
 }
@@ -292,6 +294,11 @@ friendsStepsParagraphs.forEach(paragraph => {
     paragraph.classList.add('yellow-text');
   }
 });
+}
+
+
+
+
 
 
 dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
