@@ -75,46 +75,92 @@ let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phr
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
 
 //API CALLS
-const createUserRepo = () => {
-  fetchApiData('users').then((data) => {
-    data.userData.forEach(user => {
-    user = new User(user);
-    userRepository.users.push(user)
-    })
-  })
-  .then(fetchHydration())
-  .then(fetchSleep())
-  .then(fetchActivity())
-  // .then(runUserFunctions())
-  //call main function to run wrapped user functions
+
+let userData, sleepData, activityData, hydrationData;
+
+function fetchData() {
+  return Promise.all([fetchApiData('users'), fetchApiData('sleep'), fetchApiData('activity'), fetchApiData('hydration')]);
 }
 
-const fetchHydration = (data) => {
-  fetchApiData('hydration').then((data) => {
-    data.hydrationData.forEach(hydration => {
+function assignData() {
+  fetchData()
+  // .then((promiseArray) => console.log(promiseArray))
+  .then((promises) => {
+    userData = promises[0].userData;
+    sleepData = promises[1].sleepData;
+    // console.log(sleepData);
+    activityData = promises[2].activityData;
+    hydrationData = promises[3].hydrationData;
+    instantiateData(userData, sleepData, activityData, hydrationData)
+    updateUserInfo(user, userRepository)
+    // populateDOM()
+  });
+};
+
+const instantiateData = (userData, sleepData, activityData, hydrationData) => {
+  const allUserData = userData.forEach(user => {
+      user = new User(user);
+      userRepository.users.push(user)
+      })
+  const allHydrationData = hydrationData.forEach(hydration => {
       hydration = new Hydration(hydration, userRepository);
-    })
-  })
-}
-
-const fetchSleep = () => {
-  fetchApiData('sleep').then((data) => {
-    data.sleepData.forEach(sleep => {
+      })
+  const allSleepData = sleepData.forEach(sleep => {
       sleep = new Sleep(sleep, userRepository);
-    })
-  })
+      })
+  const allActivityData = activityData.forEach(activity => {
+      activity = new Activity(activity, userRepository);
+      // runSleepFunctions(user, userRepository);
+      })
+      user = userRepository.users[0];
 }
 
-const fetchActivity = () => {
-  fetchApiData('activity').then((data) => {
-    data.activityData.forEach(activity => {
-    activity = new Activity(activity, userRepository);
-    })
-  })
-}
+
+// const createUserRepo = () => {
+//   fetchApiData('users').then((data) => {
+//     data.userData.forEach(user => {
+//     user = new User(user);
+//     userRepository.users.push(user)
+//     })
+    // fetchHydration()
+//   })
+//   .then(fetchHydration())
+//   .then(fetchSleep())
+//   .then(fetchActivity())
+//   .then(data => console.log(data))
+//   .then(updateUserInfo(userRepository))
+//   //call main function to run wrapped user functions
+// }
+//
+// const fetchHydration = (data) => {
+//   fetchApiData('hydration').then((data) => {
+//     data.hydrationData.forEach(hydration => {
+//       hydration = new Hydration(hydration, userRepository);
+//     })
+//   })
+// }
+//
+// const fetchSleep = () => {
+//   fetchApiData('sleep').then((data) => {
+//     data.sleepData.forEach(sleep => {
+//       sleep = new Sleep(sleep, userRepository);
+//     })
+//   })
+// }
+//
+// const fetchActivity = () => {
+//   fetchApiData('activity').then((data) => {
+//     data.activityData.forEach(activity => {
+//     activity = new Activity(activity, userRepository);
+//     // runSleepFunctions(user, userRepository);
+//     })
+//   })
+// }
+
 
 //EVENT LISTENERS
-window.addEventListener('load', createUserRepo)
+window.addEventListener('load', assignData)
+// createUserRepo)
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
@@ -127,13 +173,13 @@ let todayDate = "2019/09/22";
 
 
 
-// Main function that runs all methods called on a user -- runUserFunctions
-const runUserFunctions = () => {
-  user = userRepository.users[0];
-  // runHydrationFunctions()
-  // runSleepFunctions()
+// Main function that runs all methods called on a user -- updateUserInfo
+const updateUserInfo = (user, userRepository) => {
+  // user = userRepository.users[0];
+  runHydrationFunctions(user, userRepository)
+  runSleepFunctions(user, userRepository)
   // runActivityFunctions()
-  runPageFunctions()
+//   runPageFunctions()
 }
 
 // within that function, run all:
@@ -142,47 +188,11 @@ const runUserFunctions = () => {
 //
 // }
   // sleep functions (helper functions wrapping all sleep functions)
-// const runSleepFunctions = () => {
-//
-// }
-  // activity functions (helper functions wrapping all activity functions)
-// const runActivityFunctions = () => {
-//
-// }
-// call the main function in a .then after all user info is fetched
-
-
-
-
-
-const runPageFunctions = () => {
-//hydration
-let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
-  if (Object.keys(a)[0] > Object.keys(b)[0]) {
-    return -1;
-  }
-  if (Object.keys(a)[0] < Object.keys(b)[0]) {
-    return 1;
-  }
-  return 0;
-});
-
-for (var i = 0; i < dailyOz.length; i++) {
-  dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
-}
-
-hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
-  return hydration.userID === user.id && hydration.date === todayDate;
-}).numOunces;
-
-hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
-
-hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
-  return hydration.userID === user.id && hydration.date === todayDate;
-}).numOunces / 8;
-
-
+const runSleepFunctions = (user, userRepository) => {
 //sleep
+
+console.log('SLEEEEP')
+
 sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(todayDate);
 
 sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageQualityThisWeek(todayDate);
@@ -206,6 +216,46 @@ sleepInfoQualityToday.innerText = sleepData.find(sleep => {
 sleepUserHoursToday.innerText = sleepData.find(sleep => {
   return sleep.userID === user.id && sleep.date === todayDate;
 }).hoursSlept;
+
+}
+  // activity functions (helper functions wrapping all activity functions)
+// const runActivityFunctions = () => {
+//
+// }
+// call the main function in a .then after all user info is fetched
+
+
+
+
+//hydration
+const runHydrationFunctions = (user, userRepository) => {
+
+  console.log('Hydration')
+let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
+  if (Object.keys(a)[0] > Object.keys(b)[0]) {
+    return -1;
+  }
+  if (Object.keys(a)[0] < Object.keys(b)[0]) {
+    return 1;
+  }
+  return 0;
+});
+
+for (var i = 0; i < dailyOz.length; i++) {
+  dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
+}
+
+hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
+  return hydration.userID === user.id && hydration.date === todayDate;
+}).numOunces;
+
+hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
+
+hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
+  return hydration.userID === user.id && hydration.date === todayDate;
+}).numOunces / 8;
+}
+
 
 
 
@@ -283,6 +333,21 @@ user.friendsActivityRecords.forEach(friend => {
 
 let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 
+
+
+
+
+
+
+// DEFINITELY DOM STUFF
+dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
+
+dropdownEmail.innerText = `EMAIL | ${user.email}`;
+
+dropdownName.innerText = user.name.toUpperCase();
+
+headerName.innerText = `${user.getFirstName()}'S `;
+
 friendsStepsParagraphs.forEach(paragraph => {
   if (friendsStepsParagraphs[0] === paragraph) {
     paragraph.classList.add('green-text');
@@ -294,20 +359,6 @@ friendsStepsParagraphs.forEach(paragraph => {
     paragraph.classList.add('yellow-text');
   }
 });
-}
-
-
-
-
-
-
-dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
-
-dropdownEmail.innerText = `EMAIL | ${user.email}`;
-
-dropdownName.innerText = user.name.toUpperCase();
-
-headerName.innerText = `${user.getFirstName()}'S `;
 
 function flipCard(cardToHide, cardToShow) {
   cardToHide.classList.add('hide');
