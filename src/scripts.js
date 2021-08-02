@@ -1,10 +1,6 @@
 import './css/base.scss';
 import './css/styles.scss';
 
-// import userData from './data/users';
-// import activityData from './data/activity';
-// import sleepData from './data/sleep';
-// import hydrationData from './data/hydration';
 import {fetchApiData} from './APIcalls.js';
 
 import UserRepository from './UserRepository';
@@ -242,16 +238,12 @@ const runActivityFunctions = (user, userRepository) => {
     return activity.userID === user.id && activity.date === todayDate;
   }).numSteps;
 
-
   user.friendsActivityRecords.forEach(friend => {
     dropdownFriendsStepsContainer.innerHTML += `
     <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
     `;
   });
 }
-
-
-
 
 //DOM UPDATE FUNCTION FOR USER
 const updateDOM = () => {
