@@ -16,6 +16,7 @@ import Sleep from './Sleep';
 //GLOBAL VARIABLES
 let userRepository = new UserRepository();
 let user;
+let userData, sleepData, activityData, hydrationData;
 
 //QUERY SELECTORS
 let dailyOz = document.querySelectorAll('.daily-oz');
@@ -74,27 +75,22 @@ let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phras
 let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
 let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
+
 //API CALLS
-
-let userData, sleepData, activityData, hydrationData;
-
 function fetchData() {
   return Promise.all([fetchApiData('users'), fetchApiData('sleep'), fetchApiData('activity'), fetchApiData('hydration')]);
 }
 
 function assignData() {
   fetchData()
-  // .then((promiseArray) => console.log(promiseArray))
   .then((promises) => {
     userData = promises[0].userData;
     sleepData = promises[1].sleepData;
-    // console.log(sleepData);
     activityData = promises[2].activityData;
     hydrationData = promises[3].hydrationData;
     instantiateData(userData, sleepData, activityData, hydrationData)
     updateUserInfo(user, userRepository)
     updateDOM()
-    // populateDOM()
   });
 };
 
@@ -115,233 +111,149 @@ const instantiateData = (userData, sleepData, activityData, hydrationData) => {
       user = userRepository.users[Math.floor(Math.random() * userRepository.users.length)];
 }
 
-
-// const createUserRepo = () => {
-//   fetchApiData('users').then((data) => {
-//     data.userData.forEach(user => {
-//     user = new User(user);
-//     userRepository.users.push(user)
-//     })
-    // fetchHydration()
-//   })
-//   .then(fetchHydration())
-//   .then(fetchSleep())
-//   .then(fetchActivity())
-//   .then(data => console.log(data))
-//   .then(updateUserInfo(userRepository))
-//   //call main function to run wrapped user functions
-// }
-//
-// const fetchHydration = (data) => {
-//   fetchApiData('hydration').then((data) => {
-//     data.hydrationData.forEach(hydration => {
-//       hydration = new Hydration(hydration, userRepository);
-//     })
-//   })
-// }
-//
-// const fetchSleep = () => {
-//   fetchApiData('sleep').then((data) => {
-//     data.sleepData.forEach(sleep => {
-//       sleep = new Sleep(sleep, userRepository);
-//     })
-//   })
-// }
-//
-// const fetchActivity = () => {
-//   fetchApiData('activity').then((data) => {
-//     data.activityData.forEach(activity => {
-//     activity = new Activity(activity, userRepository);
-//     // runSleepFunctions(user, userRepository);
-//     })
-//   })
-// }
-
-
 //EVENT LISTENERS
 window.addEventListener('load', assignData)
-// createUserRepo)
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
-// stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
-// stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
+stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
+stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
 let todayDate = "2019/09/22";
 
 // user.findFriendsNames(userRepository.users);
 
-// next step: make sure the compiler is reading the JS in the strict ordwer you want. currently user is being read beofre it is defined. to fix - wrap all functions using the user variab;e within a function that is only called after all of your data is fetched
-
-
-
 // Main function that runs all methods called on a user -- updateUserInfo
 const updateUserInfo = (user, userRepository) => {
-  // user = userRepository.users[0];
   runHydrationFunctions(user, userRepository)
   runSleepFunctions(user, userRepository)
   runActivityFunctions(user, userRepository)
-//   runPageFunctions()
 }
 
-// within that function, run all:
-  // hydration functions (helper functions wrapping all hydration functions)
-// const runHydrationFunctions = () => {
-//
-// }
-  // sleep functions (helper functions wrapping all sleep functions)
+
+// SLEEP FUNCTIONS REQUIRING USER DATA
 const runSleepFunctions = (user, userRepository) => {
-//sleep
+  sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(todayDate);
 
-console.log('SLEEEEP')
+  sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageQualityThisWeek(todayDate);
 
-sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(todayDate);
+  sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
+    return user.id === userRepository.getLongestSleepers(todayDate)
+  }).getFirstName();
 
-sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageQualityThisWeek(todayDate);
+  sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
+    return user.id === userRepository.getWorstSleepers(todayDate)
+  }).getFirstName();
 
-sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
-  return user.id === userRepository.getLongestSleepers(todayDate)
-}).getFirstName();
+  sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
 
-sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
-  return user.id === userRepository.getWorstSleepers(todayDate)
-}).getFirstName();
+  sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
 
-sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
+  sleepInfoQualityToday.innerText = sleepData.find(sleep => {
+    return sleep.userID === user.id && sleep.date === todayDate;
+  }).sleepQuality;
 
-sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
-
-sleepInfoQualityToday.innerText = sleepData.find(sleep => {
-  return sleep.userID === user.id && sleep.date === todayDate;
-}).sleepQuality;
-
-sleepUserHoursToday.innerText = sleepData.find(sleep => {
-  return sleep.userID === user.id && sleep.date === todayDate;
-}).hoursSlept;
+  sleepUserHoursToday.innerText = sleepData.find(sleep => {
+    return sleep.userID === user.id && sleep.date === todayDate;
+  }).hoursSlept;
 
 }
-  // activity functions (helper functions wrapping all activity functions)
-// const runActivityFunctions = () => {
-//
-// }
-// call the main function in a .then after all user info is fetched
 
-
-
-
-//hydration
+// HYDRATION FUNCTIONS REQUIRING USER DATA
 const runHydrationFunctions = (user, userRepository) => {
+  let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
+    if (Object.keys(a)[0] > Object.keys(b)[0]) {
+      return -1;
+    }
+    if (Object.keys(a)[0] < Object.keys(b)[0]) {
+      return 1;
+    }
+    return 0;
+  });
 
-  console.log('Hydration')
-let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
-  if (Object.keys(a)[0] > Object.keys(b)[0]) {
-    return -1;
+  for (var i = 0; i < dailyOz.length; i++) {
+    dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
   }
-  if (Object.keys(a)[0] < Object.keys(b)[0]) {
-    return 1;
-  }
-  return 0;
-});
 
-for (var i = 0; i < dailyOz.length; i++) {
-  dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
+  hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
+    return hydration.userID === user.id && hydration.date === todayDate;
+  }).numOunces;
+
+  hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
+
+  hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
+    return hydration.userID === user.id && hydration.date === todayDate;
+  }).numOunces / 8;
 }
 
-hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
-  return hydration.userID === user.id && hydration.date === todayDate;
-}).numOunces;
-
-hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
-
-hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
-  return hydration.userID === user.id && hydration.date === todayDate;
-}).numOunces / 8;
-}
 
 
 
-
-// Activity/steps/friends
-
-
+// ACTIVITY/FRIENDS FUNCTIONS REQUIRING USER DATA
 const runActivityFunctions = (user, userRepository) => {
-user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
+  user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
 
-stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
-  return (activity.date === todayDate && activity.userId === user.id)
-}).calculateMiles(userRepository);
-
-
-stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
-
-stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
-
-stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
-
-stairsInfoFlightsToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
-}).flightsOfStairs;
-
-stairsUserStairsToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
-}).flightsOfStairs * 12;
-
-stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
-
-stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
-
-stairsTrendingButton.addEventListener('click', function () {
-  user.findTrendingStairsDays();
-  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
-});
-
-stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
-
-stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
-
-stepsTrendingButton.addEventListener('click', function () {
-  user.findTrendingStepDays();
-  trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
-});
-
-stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
-
-stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
-
-stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
-
-stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
-}).minutesActive;
-
-stepsUserStepsToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
-}).numSteps;
+  stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
+    return (activity.date === todayDate && activity.userId === user.id)
+  }).calculateMiles(userRepository);
 
 
-user.friendsActivityRecords.forEach(friend => {
-  dropdownFriendsStepsContainer.innerHTML += `
-  <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
-  `;
-});
+  stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
+
+  stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+
+  stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
+
+  stairsInfoFlightsToday.innerText = activityData.find(activity => {
+    return activity.userID === user.id && activity.date === todayDate;
+  }).flightsOfStairs;
+
+  stairsUserStairsToday.innerText = activityData.find(activity => {
+    return activity.userID === user.id && activity.date === todayDate;
+  }).flightsOfStairs * 12;
+
+  stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
+
+  stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+
+  stairsTrendingButton.addEventListener('click', function () {
+    user.findTrendingStairsDays();
+    trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
+  });
+
+  stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
+
+  stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
+
+  stepsTrendingButton.addEventListener('click', function () {
+    user.findTrendingStepDays();
+    trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
+  });
+
+  stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
+
+  stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
+
+  stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
+
+  stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
+    return activity.userID === user.id && activity.date === todayDate;
+  }).minutesActive;
+
+  stepsUserStepsToday.innerText = activityData.find(activity => {
+    return activity.userID === user.id && activity.date === todayDate;
+  }).numSteps;
 
 
+  user.friendsActivityRecords.forEach(friend => {
+    dropdownFriendsStepsContainer.innerHTML += `
+    <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
+    `;
+  });
 }
 
-// let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 
 
 
-
-// DEFINITELY DOM STUFF
-
-// function updateTrendingStairsDays() {
-//   user.findTrendingStairsDays();
-//   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
-// }
-//
-// function updateTrendingStepDays() {
-//   user.findTrendingStepDays();
-//   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
-// }
+//DOM UPDATE FUNCTION FOR USER
 const updateDOM = () => {
 dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
 
@@ -351,6 +263,18 @@ dropdownName.innerText = user.name.toUpperCase();
 
 headerName.innerText = `${user.getFirstName()}'S `;
 }
+
+//OTHER DOM FUNCTIONS THAT DON'T NEED USER DATA
+function updateTrendingStairsDays() {
+  user.findTrendingStairsDays();
+  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
+}
+
+function updateTrendingStepDays() {
+  user.findTrendingStepDays();
+  trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
+}
+
 friendsStepsParagraphs.forEach(paragraph => {
   if (friendsStepsParagraphs[0] === paragraph) {
     paragraph.classList.add('green-text');
