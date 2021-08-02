@@ -1,19 +1,29 @@
 # Refactor Tractor (Fitlit Version A)
 
-## Setup
+![Aug-02-2021 16-48-39](https://user-images.githubusercontent.com/78389005/127933150-acaffd26-5aee-409b-8c6f-e4ee99862491.gif) 
 
-1. Within your group, decide on one person to have the project repository (repo) on their GitHub account. Then, that person should fork this repo - on the top right corner of this page, click the **Fork** button.
-1. Both memebers of the group should clone down the _forked_ repo. Since you don't want to name your project "refactor-tractor-fitlit-a", you can use an optional argument when you run git clone (you replace the [...] with the terminal command arguments): `git clone [remote-address] [what you want to name the repo]`
-1. Once you have cloned the repo, change into the directory and install the project dependencies. Run `npm install` to install project dependencies.
-1. Run `npm start` in the terminal to see the HTML page (you should see some boilerplate HTML displayed on the page) when you navigate to `http://localhost:8080/`
-1. Make sure both members of your team are collaborators on the forked repo.
+## Learning Goals 
 
-## Testing
++ Build on top of pre-existing code that you did not write and navigate someone else’s codebase
++ Make network requests to API endpoints to retrieve and manipulate data
++ Refactor pre-existing code and use inheritance to DRY up repetitive logic
++ Ensure your app is following best practices for accessibility
++ Leverage Sass to DRY up your CSS
++ Incorporate Webpack to streamline your workflow process
++ Work on good Git-flow practices
 
-Testing is set up, but you will need to add more tests to it throughout your work flow. If you run `npm install`, you should see tests run. 
+## Technologies Used
+- JavaScript (Vanilla)
+- HTML
+- CSS
+- Lighthouse (Accessibility tool)
+- Sass 
+- Lint
+- Mocha & Chai
+- Github Projects
 
-## Linting Your Code
+## Contributors 
+- [Mae Duphorne](https://github.com/maeduphorne)
+- [Samantha Brown](https://github.com/Samantha-Brown)
+- [Sarah Rudy](https://github.com/sarahrudy)
 
-Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit, but that's ok - the linter is still running successfully.
-
-Your linter will look only at the JavaScript files you have within the `src` and the `test` directories.
