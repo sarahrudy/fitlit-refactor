@@ -73,7 +73,7 @@ let stepsUserStepsToday = document.querySelector('#steps-user-steps-today');
 let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
 let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
-
+let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 //API CALLS
 
 let userData, sleepData, activityData, hydrationData;
@@ -93,6 +93,7 @@ function assignData() {
     hydrationData = promises[3].hydrationData;
     instantiateData(userData, sleepData, activityData, hydrationData)
     updateUserInfo(user, userRepository)
+    updateDOM()
     // populateDOM()
   });
 };
@@ -110,9 +111,8 @@ const instantiateData = (userData, sleepData, activityData, hydrationData) => {
       })
   const allActivityData = activityData.forEach(activity => {
       activity = new Activity(activity, userRepository);
-      // runSleepFunctions(user, userRepository);
       })
-      user = userRepository.users[0];
+      user = userRepository.users[Math.floor(Math.random() * userRepository.users.length)];
 }
 
 
@@ -163,8 +163,8 @@ window.addEventListener('load', assignData)
 // createUserRepo)
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
-stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
-stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
+// stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
+// stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
 let todayDate = "2019/09/22";
 
 // user.findFriendsNames(userRepository.users);
@@ -323,26 +323,26 @@ user.friendsActivityRecords.forEach(friend => {
   `;
 });
 
-let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 
 }
 
+// let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 
 
 
 
 // DEFINITELY DOM STUFF
 
-function updateTrendingStairsDays() {
-  user.findTrendingStairsDays();
-  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
-}
-
-function updateTrendingStepDays() {
-  user.findTrendingStepDays();
-  trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
-}
-
+// function updateTrendingStairsDays() {
+//   user.findTrendingStairsDays();
+//   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
+// }
+//
+// function updateTrendingStepDays() {
+//   user.findTrendingStepDays();
+//   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
+// }
+const updateDOM = () => {
 dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
 
 dropdownEmail.innerText = `EMAIL | ${user.email}`;
@@ -350,7 +350,7 @@ dropdownEmail.innerText = `EMAIL | ${user.email}`;
 dropdownName.innerText = user.name.toUpperCase();
 
 headerName.innerText = `${user.getFirstName()}'S `;
-
+}
 friendsStepsParagraphs.forEach(paragraph => {
   if (friendsStepsParagraphs[0] === paragraph) {
     paragraph.classList.add('green-text');
