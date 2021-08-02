@@ -178,7 +178,7 @@ const updateUserInfo = (user, userRepository) => {
   // user = userRepository.users[0];
   runHydrationFunctions(user, userRepository)
   runSleepFunctions(user, userRepository)
-  // runActivityFunctions()
+  runActivityFunctions(user, userRepository)
 //   runPageFunctions()
 }
 
@@ -261,16 +261,8 @@ hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
 
 // Activity/steps/friends
 
-function updateTrendingStairsDays() {
-  user.findTrendingStairsDays();
-  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
-}
 
-function updateTrendingStepDays() {
-  user.findTrendingStepDays();
-  trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
-}
-
+const runActivityFunctions = (user, userRepository) => {
 user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
 
 stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
@@ -333,13 +325,24 @@ user.friendsActivityRecords.forEach(friend => {
 
 let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 
-
+}
 
 
 
 
 
 // DEFINITELY DOM STUFF
+
+function updateTrendingStairsDays() {
+  user.findTrendingStairsDays();
+  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
+}
+
+function updateTrendingStepDays() {
+  user.findTrendingStepDays();
+  trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
+}
+
 dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
 
 dropdownEmail.innerText = `EMAIL | ${user.email}`;
